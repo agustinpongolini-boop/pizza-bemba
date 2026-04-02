@@ -140,6 +140,59 @@ const CATS = [
 const fmt = (n) => "$" + n.toLocaleString("es-AR");
 const EGG = 1000;
 
+/* ── Cross-sell / Upsell rules (Waitry methodology) ── */
+const CROSS_SELL_RULES = [
+  { trigger: ["pizzas"], suggest: { id: "b1", name: "Pepsi 1.5L", price: 6000 }, message: "¿Sumás una Pepsi 1.5L?" },
+  { trigger: ["hamburguesas", "lomos", "sandwiches"], suggest: { id: "e2", name: "Papas Noisettes", price: 9000 }, message: "¿Upgrade a Noisettes?" },
+  { trigger: ["picadas"], suggest: { id: "b6", name: "Stella Artois 1L", price: 7500 }, message: "¿Una Stella para la picada?" },
+  { trigger: ["bebidas"], suggest: { id: "e4", name: "Nuggets x8", price: 7000 }, message: "¿Unos nuggets para picar?" },
+  { trigger: ["milanesas"], suggest: { id: "e3", name: "Cheddar o Roquefort", price: 3000 }, message: "¿Salsa cheddar o roquefort?" },
+];
+
+const BEBIDA_IDS = new Set(MENU.bebidas.map(b => b.id));
+
+function getItemCategory(id) {
+  if (id.startsWith("p")) return "pizzas";
+  if (id.startsWith("pst")) return "pizzas";
+  if (id.startsWith("h")) return "hamburguesas";
+  if (id.startsWith("m")) return "milanesas";
+  if (id.startsWith("s")) return "sandwiches";
+  if (id.startsWith("l")) return "lomos";
+  if (id.startsWith("pic")) return "picadas";
+  if (id.startsWith("e")) return "extras";
+  if (id.startsWith("b")) return "bebidas";
+  if (id.startsWith("t")) return "tostados";
+  if (id.startsWith("promo")) return "promos";
+  return null;
+}
+
+function getCrossSell(itemId) {
+  const cat = getItemCategory(itemId);
+  if (!cat) return null;
+  return CROSS_SELL_RULES.find(r => r.trigger.includes(cat)) || null;
+}
+
+function cartHasBebida(cart) {
+  return cart.some(c => BEBIDA_IDS.has(c.id.split("_")[0]));
+}
+
+function getCheckoutSuggestions(cart) {
+  const suggestions = [];
+  const ids = new Set(cart.map(c => c.id.split("_")[0]));
+  const hasPizza = cart.some(c => getItemCategory(c.id) === "pizzas");
+  const hasBurgerLomo = cart.some(c => ["hamburguesas","lomos","sandwiches","milanesas"].includes(getItemCategory(c.id)));
+  const hasBebida = cartHasBebida(cart);
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+  if (hasPizza && !ids.has("e3")) suggestions.push({ id: "e3", name: "Cheddar o Roquefort", price: 3000 });
+  if (hasPizza && !ids.has("e1")) suggestions.push({ id: "e1", name: "Papas Fritas", price: 7000 });
+  if (hasBurgerLomo && !ids.has("e4")) suggestions.push({ id: "e4", name: "Nuggets x8", price: 7000 });
+  if (!hasBebida) suggestions.push({ id: "b1", name: "Pepsi 1.5L", price: 6000 });
+  if (total > 30000 && !ids.has("promo1")) suggestions.push({ id: "promo1", name: "Promo Muzza", price: 28000, badge: "AHORRÁS $2000" });
+
+  return suggestions.slice(0, 3);
+}
+
 /* ── Quantity Stepper ── */
 function QtyStepper({ qty, onPlus, onMinus }) {
   if (qty === 0) return null;
@@ -160,16 +213,59 @@ function AddBtn({ onClick, price }) {
   );
 }
 
+/* ── Cross-Sell Toast ── */
+function CrossSellToast({ data, onAdd, onDismiss }) {
+  if (!data) return null;
+  return (
+    <div style={{position:"fixed",top:"76px",left:"50%",transform:"translateX(-50%)",zIndex:200,width:"calc(100% - 32px)",maxWidth:"440px",
+      background:"linear-gradient(135deg, #1a1714 0%, #252118 100%)",border:"1px solid rgba(212,32,39,0.4)",
+      borderRadius:"14px",padding:"12px 14px",display:"flex",alignItems:"center",gap:"10px",
+      boxShadow:"0 8px 32px rgba(0,0,0,0.5)",animation:"slideDown 0.3s ease-out"}}>
+      <div style={{flex:1,minWidth:0}}>
+        <p style={{color:"#FFD700",fontSize:"10px",fontWeight:900,textTransform:"uppercase",letterSpacing:"1px",marginBottom:"2px"}}>RECOMENDADO</p>
+        <p style={{color:"white",fontSize:"13px",fontWeight:700}}>{data.message}</p>
+        <p style={{color:"#8a7b6b",fontSize:"11px"}}>{data.suggest.name} · {fmt(data.suggest.price)}</p>
+      </div>
+      <button onClick={() => onAdd({ id: data.suggest.id, name: data.suggest.name, detail: "", price: data.suggest.price })}
+        style={{background:"#D42027",color:"white",fontWeight:900,padding:"8px 14px",borderRadius:"10px",fontSize:"12px",border:"none",cursor:"pointer",whiteSpace:"nowrap",textTransform:"uppercase"}}>
+        Agregar
+      </button>
+      <button onClick={onDismiss} style={{color:"#5a4d3d",background:"none",border:"none",cursor:"pointer",fontSize:"16px",padding:"4px"}}>✕</button>
+    </div>
+  );
+}
+
 /* ── Pizza Card ── */
 function PizzaCard({ pizza, cart, onAdd, onRemove }) {
   const [size, setSize] = useState("grande");
   const [open, setOpen] = useState(false);
+  const [upsellShown, setUpsellShown] = useState(false);
+  const [showUpsell, setShowUpsell] = useState(false);
   const price = pizza.prices[size];
   const cid = pizza.id + "_" + size;
   const found = cart.find(c => c.id === cid);
   const qty = found ? found.qty : 0;
 
-  const doAdd = () => onAdd({ id: cid, name: pizza.name, detail: SIZE_LABELS[size], price });
+  const canUpsell = !upsellShown && (size === "chica" || size === "cMedia" || size === "individual");
+  const upgradeDiff = canUpsell ? pizza.prices.grande - price : 0;
+
+  const doAdd = () => {
+    if (canUpsell) {
+      setShowUpsell(true);
+      setUpsellShown(true);
+      return;
+    }
+    onAdd({ id: cid, name: pizza.name, detail: SIZE_LABELS[size], price });
+  };
+  const doAddConfirm = () => {
+    onAdd({ id: cid, name: pizza.name, detail: SIZE_LABELS[size], price });
+    setShowUpsell(false);
+  };
+  const doAddGrande = () => {
+    const gid = pizza.id + "_grande";
+    onAdd({ id: gid, name: pizza.name, detail: SIZE_LABELS.grande, price: pizza.prices.grande });
+    setShowUpsell(false);
+  };
   const doRemove = () => onRemove(cid);
 
   return (
@@ -192,7 +288,7 @@ function PizzaCard({ pizza, cart, onAdd, onRemove }) {
       {open && (
         <div style={{display:"flex",flexWrap:"wrap",gap:"6px",marginTop:"8px"}}>
           {Object.entries(SIZE_LABELS).map(([k, label]) => (
-            <button key={k} onClick={() => { setSize(k); setOpen(false); }}
+            <button key={k} onClick={() => { setSize(k); setOpen(false); setShowUpsell(false); setUpsellShown(false); }}
               style={{fontSize:"11px",padding:"6px 8px",borderRadius:"8px",fontWeight:700,border:size===k?"none":"1px solid #3a3228",cursor:"pointer",
                 background:size===k?"#D42027":"#252118",color:size===k?"white":"#8a7b6b"}}>
               {label} · {fmt(pizza.prices[k])}
@@ -203,8 +299,17 @@ function PizzaCard({ pizza, cart, onAdd, onRemove }) {
 
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:"12px",gap:"12px"}}>
         <span style={{color:"#D42027",fontWeight:900,fontSize:"20px"}}>{fmt(price)}</span>
-        {qty === 0 ? <AddBtn onClick={doAdd} price={price} /> : <QtyStepper qty={qty} onPlus={doAdd} onMinus={doRemove} />}
+        {qty === 0 ? <AddBtn onClick={doAdd} price={price} /> : <QtyStepper qty={qty} onPlus={() => onAdd({ id: cid, name: pizza.name, detail: SIZE_LABELS[size], price })} onMinus={doRemove} />}
       </div>
+
+      {showUpsell && (
+        <div style={{marginTop:"10px",background:"linear-gradient(135deg, rgba(212,32,39,0.15) 0%, #252118 100%)",borderRadius:"10px",padding:"10px 12px",border:"1px solid rgba(212,32,39,0.3)",display:"flex",alignItems:"center",gap:"8px",animation:"fadeIn 0.3s ease-out"}}>
+          <span style={{color:"#FFD700",fontSize:"14px"}}>⬆</span>
+          <span style={{flex:1,color:"white",fontSize:"12px",fontWeight:500}}>Por <strong style={{color:"#FFD700"}}>{fmt(upgradeDiff)}</strong> más llevás la Grande</span>
+          <button onClick={doAddGrande} style={{background:"#D42027",color:"white",fontWeight:900,padding:"6px 10px",borderRadius:"8px",fontSize:"11px",border:"none",cursor:"pointer",whiteSpace:"nowrap"}}>Sí, quiero!</button>
+          <button onClick={doAddConfirm} style={{color:"#8a7b6b",fontSize:"11px",background:"none",border:"none",cursor:"pointer",whiteSpace:"nowrap"}}>No, así</button>
+        </div>
+      )}
     </div>
   );
 }
@@ -276,6 +381,24 @@ function CartPanel({ cart, onAdd, onRemove, onClose, onCheckout }) {
           <button onClick={onClose} style={{color:"#8a7b6b",background:"none",border:"none",cursor:"pointer",padding:"4px"}}>✕</button>
         </div>
         <div style={{flex:1,overflowY:"auto",padding:"16px"}}>
+          {/* Drink cross-sell banner */}
+          {cart.length > 0 && !cartHasBebida(cart) && (
+            <div style={{background:"linear-gradient(135deg, rgba(255,215,0,0.1) 0%, #1a1714 100%)",borderRadius:"12px",padding:"12px",marginBottom:"12px",border:"1px solid rgba(255,215,0,0.25)"}}>
+              <p style={{color:"#FFD700",fontSize:"12px",fontWeight:900,textTransform:"uppercase",marginBottom:"8px"}}>🥤 ¡No te olvides la bebida!</p>
+              <div style={{display:"flex",gap:"6px",flexWrap:"wrap"}}>
+                {[
+                  { id:"b1", name:"Pepsi 1.5L", price:6000 },
+                  { id:"b9", name:"Lata Brahma", price:3500 },
+                ].map(b => (
+                  <button key={b.id} onClick={() => onAdd({ id: b.id, name: b.name, detail: "", price: b.price })}
+                    style={{background:"#252118",color:"white",fontSize:"11px",fontWeight:700,padding:"7px 10px",borderRadius:"8px",border:"1px solid #3a3228",cursor:"pointer",display:"flex",alignItems:"center",gap:"4px"}}>
+                    {b.name} <span style={{color:"#D42027",fontWeight:900}}>{fmt(b.price)}</span>
+                  </button>
+                ))}
+                <button onClick={onClose} style={{background:"none",color:"#D42027",fontSize:"11px",fontWeight:700,padding:"7px 8px",border:"none",cursor:"pointer"}}>Ver más →</button>
+              </div>
+            </div>
+          )}
           {cart.length === 0 ? (
             <p style={{color:"#8a7b6b",textAlign:"center",padding:"32px 0"}}>Tu carrito está vacío</p>
           ) : (
@@ -310,8 +433,9 @@ function CartPanel({ cart, onAdd, onRemove, onClose, onCheckout }) {
 }
 
 /* ── Checkout ── */
-function Checkout({ cart, onBack, onClear }) {
+function Checkout({ cart, onBack, onClear, onAdd }) {
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const suggestions = getCheckoutSuggestions(cart);
   const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
   const [pago, setPago] = useState("efectivo");
@@ -381,6 +505,22 @@ function Checkout({ cart, onBack, onClear }) {
             <label style={{color:"#8a7b6b",fontSize:"11px",fontWeight:700,textTransform:"uppercase",display:"block",marginBottom:"6px"}}>Nota (opcional)</label>
             <textarea value={nota} onChange={e => setNota(e.target.value)} placeholder="Ej: Sin cebolla, timbre roto..." style={{...inputStyle,resize:"none",height:"72px"}} />
           </div>
+          {/* Checkout cross-sell suggestions */}
+          {suggestions.length > 0 && (
+            <div style={{background:"linear-gradient(135deg, rgba(212,32,39,0.1) 0%, #1a1714 100%)",borderRadius:"12px",padding:"12px",border:"1px solid rgba(212,32,39,0.2)"}}>
+              <p style={{color:"#FFD700",fontSize:"11px",fontWeight:900,textTransform:"uppercase",letterSpacing:"0.5px",marginBottom:"8px"}}>🔥 Otros clientes también pidieron</p>
+              <div style={{display:"flex",flexDirection:"column",gap:"6px"}}>
+                {suggestions.map(s => (
+                  <div key={s.id} style={{display:"flex",alignItems:"center",gap:"8px",background:"#252118",borderRadius:"8px",padding:"8px 10px"}}>
+                    <span style={{flex:1,color:"white",fontSize:"13px",fontWeight:600}}>{s.name}</span>
+                    <span style={{color:"#8a7b6b",fontSize:"12px",fontWeight:700}}>{fmt(s.price)}</span>
+                    <button onClick={() => onAdd({ id: s.id, name: s.name, detail: "", price: s.price })}
+                      style={{background:"#D42027",color:"white",width:"28px",height:"28px",borderRadius:"8px",border:"none",cursor:"pointer",fontWeight:900,fontSize:"16px",display:"flex",alignItems:"center",justifyContent:"center"}}>+</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <div style={{background:"#1a1714",borderRadius:"12px",padding:"12px",border:"1px solid #2a2520"}}>
             <p style={{color:"#8a7b6b",fontSize:"11px",fontWeight:700,textTransform:"uppercase",marginBottom:"8px"}}>Resumen</p>
             {cart.map(item => (
@@ -417,10 +557,17 @@ export default function App() {
   const [activeCat, setActiveCat] = useState("promos");
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState(null);
+  const [crossSell, setCrossSell] = useState(null);
+  const crossSellTimer = useRef(null);
   const sectionRefs = useRef({});
 
   const cartTotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
   const cartCount = cart.reduce((s, i) => s + i.qty, 0);
+
+  const dismissCrossSell = useCallback(() => {
+    setCrossSell(null);
+    if (crossSellTimer.current) clearTimeout(crossSellTimer.current);
+  }, []);
 
   const addToCart = useCallback((item) => {
     setCart(prev => {
@@ -431,8 +578,16 @@ export default function App() {
       }
       return [...prev, { ...item, qty: 1 }];
     });
-    setToast(item.name);
-    setTimeout(() => setToast(null), 1200);
+    // Cross-sell toast
+    const rule = getCrossSell(item.id);
+    if (rule) {
+      setCrossSell(rule);
+      if (crossSellTimer.current) clearTimeout(crossSellTimer.current);
+      crossSellTimer.current = setTimeout(() => setCrossSell(null), 5000);
+    } else {
+      setToast(item.name);
+      setTimeout(() => setToast(null), 1200);
+    }
   }, []);
 
   const removeFromCart = useCallback((id) => {
@@ -460,6 +615,8 @@ export default function App() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Bebas+Neue&display=swap');
         @keyframes fadeToast { 0%{opacity:0;transform:translateY(20px)scale(.95)} 15%{opacity:1;transform:translateY(0)scale(1)} 75%{opacity:1} 100%{opacity:0;transform:translateY(-10px)} }
+        @keyframes slideDown { 0%{opacity:0;transform:translateX(-50%) translateY(-20px)} 100%{opacity:1;transform:translateX(-50%) translateY(0)} }
+        @keyframes fadeIn { 0%{opacity:0} 100%{opacity:1} }
         .toast-anim { animation: fadeToast 1.2s ease-out forwards; }
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; margin: 0; padding: 0; }
         ::-webkit-scrollbar { display: none; }
@@ -578,15 +735,18 @@ export default function App() {
         </div>
       )}
 
-      {/* TOAST */}
-      {toast && (
+      {/* TOAST — simple confirmation */}
+      {toast && !crossSell && (
         <div className="toast-anim" style={{position:"fixed",top:"76px",left:"50%",transform:"translateX(-50%)",zIndex:200,background:"#25D366",color:"white",padding:"8px 16px",borderRadius:"10px",fontWeight:700,fontSize:"13px",pointerEvents:"none",boxShadow:"0 4px 16px rgba(0,0,0,0.3)"}}>
           ✓ {toast} agregado
         </div>
       )}
 
+      {/* CROSS-SELL TOAST */}
+      <CrossSellToast data={crossSell} onAdd={(item) => { addToCart(item); dismissCrossSell(); }} onDismiss={dismissCrossSell} />
+
       {view === "cart" && <CartPanel cart={cart} onAdd={addToCart} onRemove={removeFromCart} onClose={() => setView("menu")} onCheckout={() => setView("checkout")} />}
-      {view === "checkout" && <Checkout cart={cart} onBack={() => setView("cart")} onClear={() => { setCart([]); setView("menu"); }} />}
+      {view === "checkout" && <Checkout cart={cart} onBack={() => setView("cart")} onClear={() => { setCart([]); setView("menu"); }} onAdd={addToCart} />}
     </div>
   );
 }
