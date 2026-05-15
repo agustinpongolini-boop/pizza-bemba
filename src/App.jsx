@@ -117,61 +117,56 @@ const SIZE_LABELS = {
 
 const MENU = {
   tostados:[
-    {id:"t1",name:"Tostado Simple",desc:"Jamón, queso y mayonesa",price:10000,image:"/products/t1.jpg"},
-    {id:"t2",name:"Tostado Especial",desc:"Jamón, queso, mayonesa, tomate y huevo duro",price:11000},
+    {id:"t1",name:"Tostado Simple",desc:"Jamón, queso y mayonesa",price:11000,image:"/products/t1.jpg"},
+    {id:"t2",name:"Tostado Especial",desc:"Jamón, queso, mayonesa, tomate y huevo duro",price:12000},
   ],
   hamburguesas:[
     {id:"h1",name:"Hamburguesa Simple",desc:"Pan, carne y papas fritas",price:7000,egg:true},
-    {id:"h2",name:"Hamburguesa Gratinada",desc:"Pan, carne 125g, jamón, queso tybo y papas fritas",price:9000,egg:true},
-    {id:"h3",name:"Hamburguesa Completa",desc:"Pan, carne 125g, jamón, queso tybo, lechuga, tomate, huevo y papas fritas",price:11000,egg:true,image:"/products/h3.jpg"},
-    {id:"h4",name:"Hamburguesa Bemba",desc:"Pan, carne 125g, queso tybo, panceta ahumada, cebolla y papas fritas",price:11000,egg:true},
+    {id:"h2",name:"Hamburguesa Gratinada",desc:"Pan, carne 125g, jamón, queso tybo y papas fritas",price:10000,egg:true},
+    {id:"h3",name:"Hamburguesa Completa",desc:"Pan, carne 125g, jamón, queso tybo, lechuga, tomate, huevo y papas fritas",price:12000,egg:true,image:"/products/h3.jpg"},
+    {id:"h4",name:"Hamburguesa Bemba",desc:"Pan, carne 125g, queso tybo, panceta ahumada, cebolla y papas fritas",price:12000,egg:true},
   ],
   milanesas:[
-    {id:"m1",name:"Milanesa Clásica",desc:"Milanesa de ternera y papas fritas",price:10000,egg:true},
-    {id:"m2",name:"Milanesa Napolitana",desc:"Queso fundido, jamón cocido, tomate, orégano y papas fritas",price:14000,egg:true,image:"/products/m2.jpg"},
-    {id:"m3",name:"Milanesa Fondue",desc:"Queso tybo, mozzarella, roquefort, provolone y papas fritas",price:14000,egg:true},
+    {id:"m1",name:"Milanesa Clásica",desc:"Milanesa de ternera y papas fritas",price:12000,egg:true},
+    {id:"m2",name:"Milanesa Napolitana",desc:"Milanesa de ternera, queso fundido, jamón cocido, tomate, orégano y papas fritas",price:16000,egg:true,image:"/products/m2.jpg"},
+    {id:"m3",name:"Milanesa Fondue",desc:"Queso tybo, mozzarella, roquefort, provolone y papas fritas",price:16000,egg:true},
   ],
   sandwiches:[
     {id:"s1",name:"Sándwich Milanga Simple",desc:"Pan, milanesa y papas fritas",price:8000,egg:true},
-    {id:"s2",name:"Sándwich Milanga Gratinado",desc:"Pan, milanesa, jamón, queso tybo y papas fritas",price:10000,egg:true,image:"/products/s2.jpg"},
-    {id:"s3",name:"Sándwich Milanga Completo",desc:"Pan, milanesa, jamón, queso tybo, tomate, lechuga, huevo y papas fritas",price:11000,egg:true,image:"/products/s3.jpg"},
+    {id:"s2",name:"Sándwich Milanga Gratinado",desc:"Pan, milanesa, jamón, queso tybo y papas fritas",price:11000,egg:true,image:"/products/s2.jpg"},
+    {id:"s3",name:"Sándwich Milanga Completo",desc:"Pan, milanesa, jamón, queso tybo, tomate, lechuga, huevo y papas fritas",price:12000,egg:true,image:"/products/s3.jpg"},
   ],
   lomos:[
     {id:"l1",name:"Lomo Simple",desc:"Bife de lomo de ternera, pan y papas fritas",price:9000,egg:true},
-    {id:"l2",name:"Lomo Gratinado",desc:"Bife de lomo, pan, jamón, queso tybo y papas fritas",price:13000,egg:true},
-    {id:"l3",name:"Lomo Completo",desc:"Bife de lomo, pan, jamón, queso tybo, tomate, lechuga, huevo y papas fritas",price:15000,egg:true},
+    {id:"l2",name:"Lomo Gratinado",desc:"Bife de lomo, pan, jamón, queso tybo y papas fritas",price:15000,egg:true},
+    {id:"l3",name:"Lomo Completo",desc:"Bife de lomo, pan, jamón, queso tybo, tomate, lechuga, huevo y papas fritas",price:17000,egg:true},
   ],
   picadas:[
-    {id:"pic1a",name:"Picada Clásica (2 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:24000,image:"/products/pic1.jpg"},
-    {id:"pic1b",name:"Picada Clásica (3 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:36000,image:"/products/pic1.jpg"},
-    {id:"pic1c",name:"Picada Clásica (4 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:48000,image:"/products/pic1.jpg"},
-    {id:"pic2a",name:"Picada Fiambre (2 pers.)",desc:"Mortadela, jamón, bondiola, salame, cazuela de queso, olivas, salchicha y pan",price:25000,image:"/products/pic2.jpg"},
-    {id:"pic2b",name:"Picada Fiambre (4 pers.)",desc:"Mortadela, jamón, bondiola, salame, cazuela de queso, olivas, salchicha y pan",price:48000,image:"/products/pic2.jpg"},
+    {id:"pic1a",name:"Picada Clásica (2 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:26000,image:"/products/pic1.jpg"},
+    {id:"pic1b",name:"Picada Clásica (3 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:38000,image:"/products/pic1.jpg"},
+    {id:"pic1c",name:"Picada Clásica (4 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:50000,image:"/products/pic1.jpg"},
+    {id:"pic2a",name:"Picada Fiambre (2 pers.)",desc:"Mortadela, jamón, bondiola, salame, cazuela de queso, olivas, salchicha y pan",price:28000,image:"/products/pic2.jpg"},
+    {id:"pic2b",name:"Picada Fiambre (4 pers.)",desc:"Mortadela, jamón, bondiola, salame, cazuela de queso, olivas, salchicha y pan",price:50000,image:"/products/pic2.jpg"},
   ],
   extras:[
-    {id:"e1",name:"Papas Fritas",desc:"Porción de papas fritas",price:7000},
-    {id:"e2",name:"Papas Noisettes",desc:"Porción de papas noisettes",price:9000,image:"/products/e2.jpg"},
+    {id:"e1",name:"Papas Fritas",desc:"Porción de papas fritas",price:8000},
+    {id:"e2",name:"Papas Noisettes",desc:"Porción de papas noisettes",price:10000,image:"/products/e2.jpg"},
     {id:"e3",name:"Cheddar o Salsa Roquefort",desc:"Porción de salsa",price:3000},
-    {id:"e4",name:"Nuggets x8",desc:"8 unidades de nuggets",price:7000},
-    {id:"e5",name:"Nuggets x16",desc:"16 unidades de nuggets",price:14000},
-    {id:"e6",name:"Cazuela Salchicha Parrillera",desc:"Salchicha parrillera en salsa",price:8000},
+    {id:"e4",name:"Nuggets x8",desc:"8 unidades de nuggets",price:8000},
+    {id:"e5",name:"Nuggets x16",desc:"16 unidades de nuggets",price:16000},
+    {id:"e6",name:"Cazuela Salchicha Parrillera",desc:"Salchicha parrillera en salsa",price:9000},
     {id:"e7",name:"Cazuela de Queso",desc:"Cazuela de queso fundido",price:6000},
     {id:"e8",name:"Cazuela de Olivas",desc:"Olivas verdes o negras",price:5000},
   ],
-  postres:[
-    {id:"po1",name:"Flan Casero",desc:"Con dulce de leche, crema o ambos",price:5000},
-    {id:"po2",name:"Tiramisú",desc:"Casero, porción individual",price:6000},
-    {id:"po3",name:"Helado 1/4 Kg",desc:"Sabores a elección",price:7000},
-  ],
   bebidas:[
-    {id:"b1",name:"Pepsi 1.5L",desc:"",price:6000},
-    {id:"b2",name:"Seven Up 1.5L",desc:"",price:6000},
-    {id:"b3",name:"Mirinda 1.5L",desc:"",price:6000},
-    {id:"b4",name:"Paso de los Toros 1.5L",desc:"",price:6000},
-    {id:"b5",name:"Vino Latitud 33",desc:"",price:10000},
-    {id:"b6",name:"Stella Artois 1L",desc:"Con envase",price:7500},
-    {id:"b7",name:"Brahma 1L",desc:"Con envase",price:6000},
-    {id:"b8",name:"Quilmes 1L",desc:"Con envase",price:6000},
+    {id:"b1",name:"Pepsi 1.5L",desc:"",price:6500},
+    {id:"b2",name:"Seven Up 1.5L",desc:"",price:6500},
+    {id:"b3",name:"Mirinda 1.5L",desc:"",price:6500},
+    {id:"b4",name:"Paso de los Toros 1.5L",desc:"",price:6500},
+    {id:"b5",name:"Vino Latitud 33",desc:"",price:12000},
+    {id:"b6",name:"Stella Artois 1L",desc:"Con envase",price:7800},
+    {id:"b7",name:"Brahma 1L",desc:"Con envase",price:6800},
+    {id:"b8",name:"Quilmes 1L",desc:"Con envase",price:6800},
     {id:"b9",name:"Lata Brahma",desc:"",price:3500},
     {id:"b10",name:"Lata Stella",desc:"",price:4500},
     {id:"b11",name:"Lata Quilmes Negra",desc:"",price:3500},
@@ -179,9 +174,9 @@ const MENU = {
 };
 
 const PROMOS = [
-  {id:"promo1",name:"Promo Muzza",desc:"2 Muzzarella Grandes + Pepsi 1.5L",price:28000,originalPrice:34000,badge:"AHORRÁS $6000"},
-  {id:"promo2",name:"Promo Bemba",desc:"1 Pizza Grande (1-12) + Bebida 1.5L",price:20000,originalPrice:24000,badge:"IMPERDIBLE"},
-  {id:"promo3",name:"Combo Milanga",desc:"2 Sándwich Milanga Completo + 2 Latas",price:27000,originalPrice:29000,badge:"PARA DOS"},
+  {id:"promo1",name:"Promo Muzza",desc:"2 Muzzarella Grandes + Pepsi 1.5L",price:28000,originalPrice:34500,badge:"AHORRÁS $6500"},
+  {id:"promo2",name:"Promo Bemba",desc:"1 Pizza Grande (1-12) + Bebida 1.5L",price:20000,originalPrice:22500,badge:"IMPERDIBLE"},
+  {id:"promo3",name:"Combo Milanga",desc:"2 Sándwich Milanga Completo + 2 Latas",price:27000,originalPrice:31000,badge:"PARA DOS"},
 ];
 
 /* Top sellers — orden por impacto visual + ventas */
@@ -197,7 +192,6 @@ const CATS = [
   {key:"lomos",label:"Lomos",icon:"🥩"},
   {key:"picadas",label:"Picadas",icon:"🧀"},
   {key:"extras",label:"Extras",icon:"🍟"},
-  {key:"postres",label:"Postres",icon:"🍰"},
   {key:"bebidas",label:"Bebidas",icon:"🍺"},
 ];
 
@@ -206,10 +200,10 @@ const EGG = 1000;
 
 /* ── Cross-sell / Upsell rules (Waitry methodology) ── */
 const CROSS_SELL_RULES = [
-  { trigger: ["pizzas"], suggest: { id: "b1", name: "Pepsi 1.5L", price: 6000 }, message: "¿Sumás una Pepsi 1.5L?" },
-  { trigger: ["hamburguesas", "lomos", "sandwiches"], suggest: { id: "e2", name: "Papas Noisettes", price: 9000 }, message: "¿Upgrade a Noisettes?" },
-  { trigger: ["picadas"], suggest: { id: "b6", name: "Stella Artois 1L", price: 7500 }, message: "¿Una Stella para la picada?" },
-  { trigger: ["bebidas"], suggest: { id: "e4", name: "Nuggets x8", price: 7000 }, message: "¿Unos nuggets para picar?" },
+  { trigger: ["pizzas"], suggest: { id: "b1", name: "Pepsi 1.5L", price: 6500 }, message: "¿Sumás una Pepsi 1.5L?" },
+  { trigger: ["hamburguesas", "lomos", "sandwiches"], suggest: { id: "e2", name: "Papas Noisettes", price: 10000 }, message: "¿Upgrade a Noisettes?" },
+  { trigger: ["picadas"], suggest: { id: "b6", name: "Stella Artois 1L", price: 7800 }, message: "¿Una Stella para la picada?" },
+  { trigger: ["bebidas"], suggest: { id: "e4", name: "Nuggets x8", price: 8000 }, message: "¿Unos nuggets para picar?" },
   { trigger: ["milanesas"], suggest: { id: "e3", name: "Cheddar o Roquefort", price: 3000 }, message: "¿Salsa cheddar o roquefort?" },
 ];
 
@@ -219,7 +213,6 @@ function getItemCategory(id) {
   if (id.startsWith("promo")) return "promos";
   if (id.startsWith("pst")) return "pizzas";
   if (id.startsWith("pic")) return "picadas";
-  if (id.startsWith("po")) return "postres";
   if (id.startsWith("p")) return "pizzas";
   if (id.startsWith("h")) return "hamburguesas";
   if (id.startsWith("m")) return "milanesas";
@@ -249,15 +242,13 @@ function getCheckoutSuggestions(cart) {
   const hasBebida = cartHasBebida(cart);
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
-  const hasPostre = ids.has("po1") || ids.has("po2") || ids.has("po3");
   const muzzaGrandeQty = cart.filter(c => c.id === "p01_grande").reduce((s, i) => s + i.qty, 0);
 
   if (hasPizza && !ids.has("e3")) suggestions.push({ id: "e3", name: "Cheddar o Roquefort", price: 3000 });
-  if (hasPizza && !ids.has("e1")) suggestions.push({ id: "e1", name: "Papas Fritas", price: 7000 });
-  if (hasBurgerLomo && !ids.has("e4")) suggestions.push({ id: "e4", name: "Nuggets x8", price: 7000 });
-  if (!hasBebida) suggestions.push({ id: "b1", name: "Pepsi 1.5L", price: 6000 });
-  if (total > 15000 && !hasPostre) suggestions.push({ id: "po1", name: "Flan Casero", price: 5000 });
-  if (total > 30000 && !ids.has("promo1") && muzzaGrandeQty < 2) suggestions.push({ id: "promo1", name: "Promo Muzza", price: 28000, badge: "AHORRÁS $2000" });
+  if (hasPizza && !ids.has("e1")) suggestions.push({ id: "e1", name: "Papas Fritas", price: 8000 });
+  if (hasBurgerLomo && !ids.has("e4")) suggestions.push({ id: "e4", name: "Nuggets x8", price: 8000 });
+  if (!hasBebida) suggestions.push({ id: "b1", name: "Pepsi 1.5L", price: 6500 });
+  if (total > 30000 && !ids.has("promo1") && muzzaGrandeQty < 2) suggestions.push({ id: "promo1", name: "Promo Muzza", price: 28000, badge: "AHORRÁS $6500" });
 
   return suggestions.slice(0, 3);
 }
@@ -621,7 +612,7 @@ function CartPanel({ cart, onAdd, onRemove, onClose, onCheckout }) {
               <p style={{color:"#FFD700",fontSize:"12px",fontWeight:900,textTransform:"uppercase",marginBottom:"8px"}}>🥤 ¡No te olvides la bebida!</p>
               <div style={{display:"flex",gap:"6px",flexWrap:"wrap"}}>
                 {[
-                  { id:"b1", name:"Pepsi 1.5L", price:6000 },
+                  { id:"b1", name:"Pepsi 1.5L", price:6500 },
                   { id:"b9", name:"Lata Brahma", price:3500 },
                 ].map(b => (
                   <button key={b.id} onClick={() => onAdd({ id: b.id, name: b.name, detail: "", price: b.price })}
@@ -1069,7 +1060,7 @@ export default function App() {
           </section>
         )}
 
-        {["tostados","hamburguesas","milanesas","sandwiches","lomos","picadas","extras","postres","bebidas"].map(catKey => {
+        {["tostados","hamburguesas","milanesas","sandwiches","lomos","picadas","extras","bebidas"].map(catKey => {
           const items = filt(MENU[catKey] || []);
           if (q && items.length === 0) return null;
           const cat = CATS.find(c => c.key === catKey);
