@@ -10,7 +10,7 @@ const WHATSAPP_NUMBER = "543492250837";
 const STORAGE_KEY = "pizzabemba_cart_v1";
 
 /* ⚠️ Configurá según tu negocio real */
-const DELIVERY_FEE = 1500;          // costo de envío (0 si es gratis)
+const DELIVERY_FEE = 3000;          // costo de envío (0 si es gratis)
 const MIN_ORDER = 10000;             // pedido mínimo para delivery (0 si no aplica)
 const SCHEDULE = {
   // 0=Domingo, 1=Lunes, ..., 6=Sábado. null si cierra ese día.
