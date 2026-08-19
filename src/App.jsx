@@ -198,6 +198,40 @@ const CATS = [
 const fmt = (n) => "$" + n.toLocaleString("es-AR");
 const EGG = 1000;
 
+/* ── Promo Burger + Lata gratis (por 15 días) ── */
+const BURGER_LATA_PROMO = {
+  endDate: "2026-09-03", // último día inclusive
+  freeLataId: "b9",
+  freeLataName: "Lata Brahma",
+  giftCartId: "gift_lata_burger",
+};
+
+function isBurgerLataPromoActive(now) {
+  const today = now || new Date();
+  const end = new Date(BURGER_LATA_PROMO.endDate + "T23:59:59");
+  return today <= end;
+}
+
+function applyBurgerLataGift(cart, promoActive) {
+  const withoutGift = cart.filter(c => c.id !== BURGER_LATA_PROMO.giftCartId);
+  if (!promoActive) return withoutGift;
+  const burgerQty = withoutGift
+    .filter(c => c.id.startsWith("h") && !c.id.startsWith("hgi"))
+    .reduce((s, i) => s + i.qty, 0);
+  if (burgerQty === 0) return withoutGift;
+  return [
+    ...withoutGift,
+    {
+      id: BURGER_LATA_PROMO.giftCartId,
+      name: BURGER_LATA_PROMO.freeLataName,
+      detail: "🎁 Regalo por Promo Hamburguesas",
+      price: 0,
+      qty: burgerQty,
+      isGift: true,
+    },
+  ];
+}
+
 /* ── Cross-sell / Upsell rules (Waitry methodology) ── */
 const CROSS_SELL_RULES = [
   { trigger: ["pizzas"], suggest: { id: "b1", name: "Pepsi 1.5L", price: 6500 }, message: "¿Sumás una Pepsi 1.5L?" },
@@ -231,7 +265,7 @@ function getCrossSell(itemId) {
 }
 
 function cartHasBebida(cart) {
-  return cart.some(c => BEBIDA_IDS.has(c.id.split("_")[0]));
+  return cart.some(c => BEBIDA_IDS.has(c.id.split("_")[0]) || c.id === BURGER_LATA_PROMO.giftCartId);
 }
 
 function getCheckoutSuggestions(cart) {
@@ -525,7 +559,7 @@ function PizzaCard({ pizza, cart, onAdd, onRemove, onImageClick }) {
 }
 
 /* ── Item Card ── */
-function ItemCard({ item, cart, onAdd, onRemove, onImageClick }) {
+function ItemCard({ item, cart, onAdd, onRemove, onImageClick, promoBadge }) {
   const [withEgg, setWithEgg] = useState(false);
   const fp = item.price + (withEgg && item.egg ? EGG : 0);
   const cid = item.id + (withEgg ? "_egg" : "");
@@ -546,6 +580,12 @@ function ItemCard({ item, cart, onAdd, onRemove, onImageClick }) {
       <div style={{padding:"16px"}}>
       <span style={{fontWeight:900,color:"#f5e6d3",fontSize:"15px",textTransform:"uppercase",letterSpacing:"0.5px"}}>{item.name}</span>
       {item.desc && <p style={{color:"#a89684",fontSize:"12px",marginTop:"4px",lineHeight:"1.45"}}>{item.desc}</p>}
+      {promoBadge && (
+        <div style={{marginTop:"10px",display:"inline-flex",alignItems:"center",gap:"6px",background:"linear-gradient(135deg, rgba(212,32,39,.14) 0%, rgba(255,215,0,.10) 100%)",border:"1px solid rgba(255,215,0,.45)",padding:"5px 10px",borderRadius:"99px",boxShadow:"0 2px 8px rgba(212,32,39,.15)"}}>
+          <span style={{fontSize:"13px",animation:"ember 1.6s ease-in-out infinite"}}>🔥</span>
+          <span style={{color:"#FFD700",fontSize:"11px",fontWeight:900,letterSpacing:".4px",textTransform:"uppercase"}}>{promoBadge}</span>
+        </div>
+      )}
       {item.egg && (
         <label style={{display:"flex",alignItems:"center",gap:"8px",marginTop:"10px",cursor:"pointer"}}>
           <div onClick={() => setWithEgg(!withEgg)} style={{width:"20px",height:"20px",borderRadius:"5px",border:withEgg?"none":"2px solid #3a3228",background:withEgg?"linear-gradient(135deg, #D42027 0%, #a8181d 100%)":"transparent",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",transition:"all .15s ease",boxShadow:withEgg?"0 2px 6px rgba(212,32,39,.4)":"none"}}>
@@ -594,6 +634,48 @@ function PromoCard({ promo, cart, onAdd, onRemove }) {
   );
 }
 
+/* ── Burger + Lata Promo Banner (headline) ── */
+function BurgerPromoBanner({ onClick }) {
+  return (
+    <div onClick={onClick} className="card burger-promo-banner"
+      style={{
+        position:"relative",
+        background:"linear-gradient(135deg, #D42027 0%, #FF6B00 55%, #FFA500 100%)",
+        borderRadius:"22px",
+        padding:"16px 16px 16px 14px",
+        marginBottom:"24px",
+        display:"flex",
+        alignItems:"center",
+        gap:"14px",
+        cursor:"pointer",
+        overflow:"hidden",
+        boxShadow:"0 12px 32px rgba(212,32,39,.55), inset 0 1px 0 rgba(255,255,255,.18)",
+        border:"1px solid rgba(255,215,0,.4)",
+      }}>
+      {/* Decorative flame layers */}
+      <span style={{position:"absolute",top:"-14px",right:"-8px",fontSize:"78px",opacity:.14,transform:"rotate(14deg)",pointerEvents:"none",lineHeight:1}}>🔥</span>
+      <span style={{position:"absolute",bottom:"-18px",right:"48%",fontSize:"52px",opacity:.09,transform:"rotate(-8deg)",pointerEvents:"none",lineHeight:1}}>🍔</span>
+
+      {/* Burger photo */}
+      <div style={{position:"relative",width:"92px",height:"92px",flexShrink:0,borderRadius:"16px",overflow:"hidden",boxShadow:"0 6px 16px rgba(0,0,0,.5), 0 0 0 2px rgba(255,255,255,.18)"}}>
+        <img src="/products/h3.jpg" alt="Hamburguesas Bemba" loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} />
+        <span style={{position:"absolute",top:"6px",left:"6px",background:"rgba(0,0,0,.55)",color:"white",fontSize:"14px",width:"22px",height:"22px",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",backdropFilter:"blur(4px)"}}>🎁</span>
+      </div>
+
+      <div style={{flex:1,minWidth:0,position:"relative"}}>
+        <div style={{display:"flex",alignItems:"center",gap:"6px",marginBottom:"6px",flexWrap:"wrap"}}>
+          <span style={{fontSize:"17px",animation:"ember 1.4s ease-in-out infinite",filter:"drop-shadow(0 2px 4px rgba(0,0,0,.5))"}}>🔥</span>
+          <span style={{background:"linear-gradient(135deg,#FFD700 0%,#FFA500 100%)",color:"#1a1310",fontSize:"9px",fontWeight:900,padding:"3px 8px",borderRadius:"99px",textTransform:"uppercase",letterSpacing:"1px",boxShadow:"0 2px 6px rgba(0,0,0,.35)"}}>Solo 15 días</span>
+        </div>
+        <p style={{fontFamily:"'Bebas Neue', sans-serif",color:"white",fontSize:"24px",letterSpacing:"1.3px",lineHeight:1,marginBottom:"4px",textShadow:"0 2px 6px rgba(0,0,0,.35)"}}>Burger + Lata GRATIS</p>
+        <p style={{color:"rgba(255,255,255,.94)",fontSize:"11px",fontWeight:600,letterSpacing:".2px",lineHeight:1.35}}>Todas las hamburguesas incluyen Lata Brahma</p>
+      </div>
+
+      <span style={{color:"white",fontSize:"24px",flexShrink:0,opacity:.9,fontWeight:900,marginLeft:"2px"}}>›</span>
+    </div>
+  );
+}
+
 /* ── Cart Panel ── */
 function CartPanel({ cart, onAdd, onRemove, onClose, onCheckout }) {
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
@@ -629,13 +711,22 @@ function CartPanel({ cart, onAdd, onRemove, onClose, onCheckout }) {
           ) : (
             <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
               {cart.map((item) => (
-                <div key={item.id} style={{display:"flex",alignItems:"center",gap:"12px",background:"#1a1714",borderRadius:"12px",padding:"12px"}}>
+                <div key={item.id} style={{display:"flex",alignItems:"center",gap:"12px",background: item.isGift ? "linear-gradient(135deg, rgba(212,32,39,.14) 0%, rgba(255,215,0,.08) 100%), #1a1714" : "#1a1714",borderRadius:"12px",padding:"12px",border: item.isGift ? "1px solid rgba(255,215,0,.35)" : "none"}}>
                   <div style={{flex:1,minWidth:0}}>
                     <p style={{color:"white",fontWeight:700,fontSize:"14px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{item.name}</p>
-                    {item.detail && <p style={{color:"#8a7b6b",fontSize:"11px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{item.detail}</p>}
+                    {item.detail && <p style={{color: item.isGift ? "#FFD700" : "#8a7b6b",fontSize:"11px",fontWeight: item.isGift ? 700 : 400,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{item.detail}</p>}
                   </div>
-                  <QtyStepper qty={item.qty} onPlus={() => onAdd(item)} onMinus={() => onRemove(item.id)} />
-                  <span style={{color:"#D42027",fontWeight:900,fontSize:"14px",width:"72px",textAlign:"right",flexShrink:0}}>{fmt(item.price * item.qty)}</span>
+                  {item.isGift ? (
+                    <>
+                      <span style={{background:"#0e0c0a",color:"#f5e6d3",fontWeight:900,fontSize:"13px",padding:"6px 10px",borderRadius:"10px",border:"1px solid #2a2520",fontFamily:"'Bebas Neue', sans-serif",letterSpacing:"1px",minWidth:"36px",textAlign:"center"}}>x{item.qty}</span>
+                      <span style={{color:"#FFD700",fontWeight:900,fontSize:"13px",width:"72px",textAlign:"right",flexShrink:0,letterSpacing:".5px"}}>GRATIS</span>
+                    </>
+                  ) : (
+                    <>
+                      <QtyStepper qty={item.qty} onPlus={() => onAdd(item)} onMinus={() => onRemove(item.id)} />
+                      <span style={{color:"#D42027",fontWeight:900,fontSize:"14px",width:"72px",textAlign:"right",flexShrink:0}}>{fmt(item.price * item.qty)}</span>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
@@ -680,8 +771,8 @@ function Checkout({ cart, onBack, onConfirm, onAdd }) {
     msg += `📋 *Detalle:*\n`;
     cart.forEach(i => {
       msg += `• ${i.qty}x ${i.name}`;
-      if (i.detail) msg += ` (${i.detail})`;
-      msg += ` — ${fmt(i.price * i.qty)}\n`;
+      if (i.detail && !i.isGift) msg += ` (${i.detail})`;
+      msg += i.isGift ? ` — 🎁 REGALO\n` : ` — ${fmt(i.price * i.qty)}\n`;
     });
     if (nota) msg += `\n📝 Nota: ${nota}\n`;
     if (deliveryFee > 0) msg += `\n📦 Envío: ${fmt(deliveryFee)}`;
@@ -756,8 +847,8 @@ function Checkout({ cart, onBack, onConfirm, onAdd }) {
             <p style={{color:"#8a7b6b",fontSize:"11px",fontWeight:700,textTransform:"uppercase",marginBottom:"8px"}}>Resumen</p>
             {cart.map(item => (
               <div key={item.id} style={{display:"flex",justifyContent:"space-between",fontSize:"13px",padding:"2px 0"}}>
-                <span style={{color:"#b0a090"}}>{item.qty}x {item.name}</span>
-                <span style={{color:"white",fontWeight:700}}>{fmt(item.price * item.qty)}</span>
+                <span style={{color:"#b0a090"}}>{item.qty}x {item.name}{item.isGift && <span style={{color:"#FFD700",fontWeight:700,marginLeft:"6px"}}>🎁</span>}</span>
+                <span style={{color: item.isGift ? "#FFD700" : "white",fontWeight:700}}>{item.isGift ? "REGALO" : fmt(item.price * item.qty)}</span>
               </div>
             ))}
             <div style={{display:"flex",justifyContent:"space-between",fontSize:"13px",padding:"6px 0 2px",marginTop:"6px",borderTop:"1px dashed #2a2520",color:"#b0a090"}}>
@@ -822,7 +913,7 @@ function Checkout({ cart, onBack, onConfirm, onAdd }) {
    MAIN APP
    ══════════════════════════════════════════════════════════════ */
 export default function App() {
-  const [cart, setCart] = useState(loadCart);
+  const [cart, setCart] = useState(() => applyBurgerLataGift(loadCart(), isBurgerLataPromoActive()));
   const [view, setView] = useState("menu");
   const [activeCat, setActiveCat] = useState("promos");
   const [search, setSearch] = useState("");
@@ -832,10 +923,14 @@ export default function App() {
   const sectionRefs = useRef({});
   const shownCrossSells = useRef(new Set());
   const [storeStatus, setStoreStatus] = useState(() => getStoreStatus());
+  const [burgerPromoActive, setBurgerPromoActive] = useState(() => isBurgerLataPromoActive());
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
-    const id = setInterval(() => setStoreStatus(getStoreStatus()), 60000);
+    const id = setInterval(() => {
+      setStoreStatus(getStoreStatus());
+      setBurgerPromoActive(isBurgerLataPromoActive());
+    }, 60000);
     return () => clearInterval(id);
   }, []);
 
@@ -855,10 +950,12 @@ export default function App() {
   }, []);
 
   const addToCart = useCallback((item) => {
+    if (item.isGift) return; // gift lines are managed automatically
     const idx = cart.findIndex(c => c.id === item.id);
-    const next = idx >= 0
+    let next = idx >= 0
       ? cart.map((c, i) => i === idx ? { ...c, qty: c.qty + 1 } : c)
       : [...cart, { ...item, qty: 1 }];
+    next = applyBurgerLataGift(next, isBurgerLataPromoActive());
     setCart(next);
 
     const rule = getCrossSell(item.id);
@@ -879,11 +976,14 @@ export default function App() {
   }, [cart]);
 
   const removeFromCart = useCallback((id) => {
+    if (id === BURGER_LATA_PROMO.giftCartId) return; // can't remove gift manually
     setCart(prev => {
       const idx = prev.findIndex(c => c.id === id);
       if (idx < 0) return prev;
-      if (prev[idx].qty <= 1) return prev.filter((_, i) => i !== idx);
-      return prev.map((c, i) => i === idx ? { ...c, qty: c.qty - 1 } : c);
+      let next = prev[idx].qty <= 1
+        ? prev.filter((_, i) => i !== idx)
+        : prev.map((c, i) => i === idx ? { ...c, qty: c.qty - 1 } : c);
+      return applyBurgerLataGift(next, isBurgerLataPromoActive());
     });
   }, []);
 
@@ -1013,6 +1113,10 @@ export default function App() {
       {/* CONTENT */}
       <main style={{maxWidth:"480px",margin:"0 auto",padding:"16px 16px 120px"}}>
 
+        {!q && burgerPromoActive && (
+          <BurgerPromoBanner onClick={() => scrollTo("hamburguesas")} />
+        )}
+
         {!q && (
           <section style={{marginBottom:"32px"}}>
             <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",marginBottom:"4px"}}>
@@ -1071,7 +1175,7 @@ export default function App() {
                 <p style={{color:"#a89684",fontSize:"12px",marginTop:"-8px",marginBottom:"12px",paddingLeft:"14px"}}>Opcional: huevo +{fmt(EGG)}</p>
               )}
               <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
-                {items.map(item => <ItemCard key={item.id} item={item} cart={cart} onAdd={addToCart} onRemove={removeFromCart} onImageClick={setLightbox} />)}
+                {items.map(item => <ItemCard key={item.id} item={item} cart={cart} onAdd={addToCart} onRemove={removeFromCart} onImageClick={setLightbox} promoBadge={catKey === "hamburguesas" && burgerPromoActive ? "+ Lata Brahma GRATIS" : null} />)}
               </div>
             </section>
           );
