@@ -64,50 +64,50 @@ function loadCart() {
 }
 
 const PIZZAS = [
-  { id:"p01", num:1, name:"Muzzarella", desc:"Salsa de tomate y muzzarella", image:"/products/p01.jpg", prices:{grande:14000,gMedia:7000,chica:12000,cMedia:6000,individual:7000}},
-  { id:"p02", num:2, name:"Especial", desc:"Salsa de tomate, muzzarella, jamón y aceitunas", prices:{grande:16000,gMedia:8000,chica:14000,cMedia:7000,individual:8000}},
-  { id:"p03", num:3, name:"Panceta Ahumada", desc:"Salsa de tomate, muzzarella, panceta y aceitunas", prices:{grande:20000,gMedia:10000,chica:18000,cMedia:9000,individual:10000}},
-  { id:"p04", num:4, name:"Morrones", desc:"Salsa de tomate, muzzarella, morrones y jamón", image:"/products/p04.jpg", prices:{grande:18000,gMedia:9000,chica:14000,cMedia:7000,individual:8000}},
-  { id:"p05", num:5, name:"Anchoas", desc:"Salsa de tomate, muzzarella y anchoas", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:10000}},
-  { id:"p06", num:6, name:"Pougle", desc:"Salsa de tomate, muzzarella, jamón, crema y pollo", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:10000}},
-  { id:"p07", num:7, name:"Fugazetta", desc:"Salsa de tomate, muzzarella y cebolla", prices:{grande:16000,gMedia:8000,chica:14000,cMedia:7000,individual:8000}},
-  { id:"p08", num:8, name:"Norteña", desc:"Salsa de tomate, muzzarella y humita", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:10000}},
-  { id:"p09", num:9, name:"Palmitos", desc:"Salsa de tomate, muzzarella, jamón y palmitos", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p10", num:10, name:"Hongos", desc:"Salsa de tomate, muzzarella, jamón y champignon", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p11", num:11, name:"Napoles", desc:"Salsa de tomate, muzzarella, rodajas de tomate y ajo", prices:{grande:16000,gMedia:8000,chica:14000,cMedia:7000,individual:8000}},
-  { id:"p12", num:12, name:"Cuatro Quesos", desc:"Muzzarella, provolone, roquefort y sardo", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:9000}},
-  { id:"p13", num:13, name:"Agridulce", desc:"Salsa de tomate, muzzarella, jamón, ananá y cerezas", image:"/products/p13.jpg", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p14", num:14, name:"Carne a Cuchillo", desc:"Muzzarella, cebolla, choclo, carne y pimentón", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p15", num:15, name:"Bongo Bong", desc:"Muzzarella, panceta, morrones, carne y champignon", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p16", num:16, name:"Verdeo", desc:"Salsa de tomate, muzzarella, jamón y cebolla de verdeo", prices:{grande:16000,gMedia:8000,chica:12000,cMedia:6000,individual:7000}},
-  { id:"p17", num:17, name:"Vegetales al Oliva", desc:"Champignones, palmitos, aceitunas, morrones y aceite de oliva", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p18", num:18, name:"Calabresa", desc:"Salsa de tomate, muzzarella, salame y morrones", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:9000}},
-  { id:"p19", num:19, name:"Hongos al Oliva", desc:"Salsa de tomate, muzzarella, panceta y champignones", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p20", num:20, name:"Gambi", desc:"Muzzarella, ananá, palmitos, jamón, aceitunas y cerezas", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p21", num:21, name:"Roquefort Especial", desc:"Salsa de tomate, muzzarella, jamón y roquefort", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:9000}},
-  { id:"p22", num:22, name:"Provenzal", desc:"Salsa de tomate, muzzarella, ajo y perejil", image:"/products/p22.jpg", prices:{grande:14000,gMedia:7000,chica:12000,cMedia:6000,individual:7000}},
-  { id:"p23", num:23, name:"Nueces al Roquefort", desc:"Muzzarella, rodajas de tomate, nueces y roquefort", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:9000}},
-  { id:"p24", num:24, name:"Sicilia", desc:"Muzzarella, tomates en rodajas, albahaca y aceitunas negras", prices:{grande:18000,gMedia:9000,chica:14000,cMedia:7000,individual:8000}},
-  { id:"p25", num:25, name:"Rúcula", desc:"Salsa de tomate, muzzarella, jamón crudo y rúcula", image:"/products/p25.jpg", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:10000}},
-  { id:"p26", num:26, name:"Jamón Crudo", desc:"Salsa de tomate, muzzarella, jamón crudo y aceitunas negras", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:9000}},
-  { id:"p27", num:27, name:"Fugazetta Especial", desc:"Salsa de tomate, muzzarella, cebolla y roquefort", prices:{grande:16000,gMedia:8000,chica:12000,cMedia:6000,individual:7000}},
-  { id:"p28", num:28, name:"Madjyd", desc:"Muzzarella, rodajas de tomate, morrones y huevo duro", prices:{grande:18000,gMedia:9000,chica:14000,cMedia:7000,individual:7000}},
-  { id:"p29", num:29, name:"Palmitos Especial", desc:"Muzzarella, jamón, palmitos y salsa golf", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p30", num:30, name:"Mostaza", desc:"Muzzarella, salchichas de viena en rodajas y mostaza", prices:{grande:14000,gMedia:7000,chica:12000,cMedia:6000,individual:7000}},
-  { id:"p31", num:31, name:"Atún", desc:"Salsa de tomate, muzzarella, atún y orégano", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p32", num:32, name:"Estaciones", desc:"Salsa de tomate, palmitos, morrones y especial", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:9000}},
-  { id:"p33", num:33, name:"Mediterránea", desc:"Muzzarella, rodajas de tomate, anchoas y ajo", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:9000}},
-  { id:"p34", num:34, name:"Espinaca", desc:"Muzzarella, espinaca, huevo duro y queso rallado", prices:{grande:16000,gMedia:8000,chica:14000,cMedia:7000,individual:8000}},
-  { id:"p35", num:35, name:"Roquefort y Apio", desc:"Muzzarella, roquefort, apio y nueces", prices:{grande:18000,gMedia:9000,chica:14000,cMedia:7000,individual:8000}},
-  { id:"p36", num:36, name:"Marinera", desc:"Muzzarella, atún, anchoas, aceitunas verdes y negras", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:10000}},
-  { id:"p37", num:37, name:"Bismak", desc:"Muzzarella, pimientos, cebolla, ajo y sal", prices:{grande:16000,gMedia:8000,chica:12000,cMedia:6000,individual:7000}},
-  { id:"p38", num:38, name:"Roca", desc:"Muzzarella, carne trozada y salsa cuatro quesos", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:11000}},
-  { id:"p39", num:39, name:"Come Ti Piace", desc:"¡Inventala a tu gusto! Muzzarella + 3 ingredientes", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:12000}},
+  { id:"p01", num:1, name:"Muzzarella", desc:"Salsa de tomate y muzzarella", image:"/products/p01.jpg", prices:{grande:16000,gMedia:8000,chica:14000,cMedia:7000,individual:7000}},
+  { id:"p02", num:2, name:"Especial", desc:"Salsa de tomate, muzzarella, jamón y aceitunas", prices:{grande:18000,gMedia:9000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p03", num:3, name:"Panceta Ahumada", desc:"Salsa de tomate, muzzarella, panceta y aceitunas", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:10000}},
+  { id:"p04", num:4, name:"Morrones", desc:"Salsa de tomate, muzzarella, morrones y jamón", image:"/products/p04.jpg", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p05", num:5, name:"Anchoas", desc:"Salsa de tomate, muzzarella y anchoas", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:10000}},
+  { id:"p06", num:6, name:"Pougle", desc:"Salsa de tomate, muzzarella, jamón, crema y pollo", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:10000}},
+  { id:"p07", num:7, name:"Fugazetta", desc:"Salsa de tomate, muzzarella y cebolla", prices:{grande:18000,gMedia:9000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p08", num:8, name:"Norteña", desc:"Salsa de tomate, muzzarella y humita", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:10000}},
+  { id:"p09", num:9, name:"Palmitos", desc:"Salsa de tomate, muzzarella, jamón y palmitos", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p10", num:10, name:"Hongos", desc:"Salsa de tomate, muzzarella, jamón y champignon", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p11", num:11, name:"Napoles", desc:"Salsa de tomate, muzzarella, rodajas de tomate y ajo", prices:{grande:18000,gMedia:9000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p12", num:12, name:"Cuatro Quesos", desc:"Muzzarella, provolone, roquefort y sardo", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:9000}},
+  { id:"p13", num:13, name:"Agridulce", desc:"Salsa de tomate, muzzarella, jamón, ananá y cerezas", image:"/products/p13.jpg", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p14", num:14, name:"Carne a Cuchillo", desc:"Muzzarella, cebolla, choclo, carne y pimentón", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p15", num:15, name:"Bongo Bong", desc:"Muzzarella, panceta, morrones, carne y champignon", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p16", num:16, name:"Verdeo", desc:"Salsa de tomate, muzzarella, jamón y cebolla de verdeo", prices:{grande:18000,gMedia:9000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p17", num:17, name:"Vegetales al Oliva", desc:"Champignones, palmitos, aceitunas, morrones y aceite de oliva", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p18", num:18, name:"Calabresa", desc:"Salsa de tomate, muzzarella, salame y morrones", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:9000}},
+  { id:"p19", num:19, name:"Hongos al Oliva", desc:"Salsa de tomate, muzzarella, panceta y champignones", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p20", num:20, name:"Gambi", desc:"Muzzarella, ananá, palmitos, jamón, aceitunas y cerezas", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p21", num:21, name:"Roquefort Especial", desc:"Salsa de tomate, muzzarella, jamón y roquefort", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:9000}},
+  { id:"p22", num:22, name:"Provenzal", desc:"Salsa de tomate, muzzarella, ajo y perejil", image:"/products/p22.jpg", prices:{grande:16000,gMedia:8000,chica:14000,cMedia:7000,individual:7000}},
+  { id:"p23", num:23, name:"Nueces al Roquefort", desc:"Muzzarella, rodajas de tomate, nueces y roquefort", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:9000}},
+  { id:"p24", num:24, name:"Sicilia", desc:"Muzzarella, tomates en rodajas, albahaca y aceitunas negras", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p25", num:25, name:"Rúcula", desc:"Salsa de tomate, muzzarella, jamón crudo y rúcula", image:"/products/p25.jpg", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:10000}},
+  { id:"p26", num:26, name:"Jamón Crudo", desc:"Salsa de tomate, muzzarella, jamón crudo y aceitunas negras", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:9000}},
+  { id:"p27", num:27, name:"Fugazetta Especial", desc:"Salsa de tomate, muzzarella, cebolla y roquefort", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p28", num:28, name:"Madjyd", desc:"Muzzarella, rodajas de tomate, morrones y huevo duro", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p29", num:29, name:"Palmitos Especial", desc:"Muzzarella, jamón, palmitos y salsa golf", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p30", num:30, name:"Mostaza", desc:"Muzzarella, salchichas de viena en rodajas y mostaza", prices:{grande:16000,gMedia:8000,chica:14000,cMedia:7000,individual:7000}},
+  { id:"p31", num:31, name:"Atún", desc:"Salsa de tomate, muzzarella, atún y orégano", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p32", num:32, name:"Estaciones", desc:"Salsa de tomate, palmitos, morrones y especial", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:9000}},
+  { id:"p33", num:33, name:"Mediterránea", desc:"Muzzarella, rodajas de tomate, anchoas y ajo", prices:{grande:22000,gMedia:11000,chica:18000,cMedia:9000,individual:9000}},
+  { id:"p34", num:34, name:"Espinaca", desc:"Muzzarella, espinaca, huevo duro y queso rallado", prices:{grande:18000,gMedia:9000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p35", num:35, name:"Roquefort y Apio", desc:"Muzzarella, roquefort, apio y nueces", prices:{grande:20000,gMedia:10000,chica:16000,cMedia:8000,individual:8000}},
+  { id:"p36", num:36, name:"Marinera", desc:"Muzzarella, atún, anchoas, aceitunas verdes y negras", prices:{grande:24000,gMedia:12000,chica:20000,cMedia:10000,individual:10000}},
+  { id:"p37", num:37, name:"Bismak", desc:"Muzzarella, pimientos, cebolla, ajo y sal", prices:{grande:18000,gMedia:9000,chica:16000,cMedia:7000,individual:7000}},
+  { id:"p38", num:38, name:"Roca", desc:"Muzzarella, carne trozada y salsa cuatro quesos", prices:{grande:26000,gMedia:13000,chica:22000,cMedia:11000,individual:11000}},
+  { id:"p39", num:39, name:"Come Ti Piace", desc:"¡Inventala a tu gusto! Muzzarella + 3 ingredientes", prices:{grande:28000,gMedia:14000,chica:24000,cMedia:12000,individual:12000}},
 ];
 
 const PIZZAS_SIN_TACC = [
-  { id:"pst1", name:"Muzza Sin TACC", desc:"Pizza de muzzarella apta celíacos", price:15000 },
-  { id:"pst2", name:"Con Jamón Sin TACC", desc:"Pizza con jamón apta celíacos", price:17000 },
+  { id:"pst1", name:"Muzza Sin TACC", desc:"Pizza de muzzarella apta celíacos", price:16000 },
+  { id:"pst2", name:"Con Jamón Sin TACC", desc:"Pizza con jamón apta celíacos", price:18000 },
   { id:"pst3", name:"Vegetales Sin TACC", desc:"Pizza de vegetales apta celíacos", price:18000 },
 ];
 
@@ -117,8 +117,8 @@ const SIZE_LABELS = {
 
 const MENU = {
   tostados:[
-    {id:"t1",name:"Tostado Simple",desc:"Jamón, queso y mayonesa",price:13000,image:"/products/t1.jpg"},
-    {id:"t2",name:"Tostado Especial",desc:"Jamón, queso, mayonesa, tomate y huevo duro",price:14000},
+    {id:"t1",name:"Tostado Simple",desc:"Jamón, queso y mayonesa",price:14000,image:"/products/t1.jpg"},
+    {id:"t2",name:"Tostado Especial",desc:"Jamón, queso, mayonesa, tomate y huevo duro",price:15000},
   ],
   hamburguesas:[
     {id:"h1",name:"Hamburguesa Simple",desc:"Pan, carne y papas fritas",price:8000,egg:true},
@@ -127,46 +127,46 @@ const MENU = {
     {id:"h4",name:"Hamburguesa Bemba",desc:"Pan, carne 125g, queso tybo, panceta ahumada, cebolla y papas fritas",price:14000,egg:true},
   ],
   milanesas:[
-    {id:"m1",name:"Milanesa Clásica",desc:"Milanesa de ternera y papas fritas",price:14000,egg:true},
-    {id:"m2",name:"Milanesa Napolitana",desc:"Milanesa de ternera, queso fundido, jamón cocido, tomate, orégano y papas fritas",price:17000,egg:true,image:"/products/m2.jpg"},
-    {id:"m3",name:"Milanesa Fondue",desc:"Queso tybo, mozzarella, roquefort, provolone y papas fritas",price:17000,egg:true},
+    {id:"m1",name:"Milanesa Clásica",desc:"Milanesa de ternera y papas fritas",price:15000,egg:true},
+    {id:"m2",name:"Milanesa Napolitana",desc:"Milanesa de ternera, queso fundido, jamón cocido, tomate, orégano y papas fritas",price:18000,egg:true,image:"/products/m2.jpg"},
+    {id:"m3",name:"Milanesa Fondue",desc:"Queso tybo, mozzarella, roquefort, provolone y papas fritas",price:18000,egg:true},
   ],
   sandwiches:[
     {id:"s1",name:"Sándwich Milanga Simple",desc:"Pan, milanesa y papas fritas",price:8000,egg:true},
     {id:"s2",name:"Sándwich Milanga Gratinado",desc:"Pan, milanesa, jamón, queso tybo y papas fritas",price:12000,egg:true,image:"/products/s2.jpg"},
-    {id:"s3",name:"Sándwich Milanga Completo",desc:"Pan, milanesa, jamón, queso tybo, tomate, lechuga, huevo y papas fritas",price:13000,egg:true,image:"/products/s3.jpg"},
+    {id:"s3",name:"Sándwich Milanga Completo",desc:"Pan, milanesa, jamón, queso tybo, tomate, lechuga, huevo y papas fritas",price:14000,egg:true,image:"/products/s3.jpg"},
   ],
   lomos:[
     {id:"l1",name:"Lomo Simple",desc:"Bife de lomo de ternera, pan y papas fritas",price:9000,egg:true},
-    {id:"l2",name:"Lomo Gratinado",desc:"Bife de lomo, pan, jamón, queso tybo y papas fritas",price:17000,egg:true},
-    {id:"l3",name:"Lomo Completo",desc:"Bife de lomo, pan, jamón, queso tybo, tomate, lechuga, huevo y papas fritas",price:19000,egg:true},
+    {id:"l2",name:"Lomo Gratinado",desc:"Bife de lomo, pan, jamón, queso tybo y papas fritas",price:18000,egg:true},
+    {id:"l3",name:"Lomo Completo",desc:"Bife de lomo, pan, jamón, queso tybo, tomate, lechuga, huevo y papas fritas",price:20000,egg:true},
   ],
   picadas:[
-    {id:"pic1a",name:"Picada Clásica (2 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:28000,image:"/products/pic1.jpg"},
-    {id:"pic1b",name:"Picada Clásica (3 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:42000,image:"/products/pic1.jpg"},
-    {id:"pic1c",name:"Picada Clásica (4 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:52000,image:"/products/pic1.jpg"},
-    {id:"pic2a",name:"Picada Fiambre (2 pers.)",desc:"Mortadela, jamón, bondiola, salame, cazuela de queso, olivas, salchicha y pan",price:28000,image:"/products/pic2.jpg"},
-    {id:"pic2b",name:"Picada Fiambre (4 pers.)",desc:"Mortadela, jamón, bondiola, salame, cazuela de queso, olivas, salchicha y pan",price:42000,image:"/products/pic2.jpg"},
+    {id:"pic1a",name:"Picada Clásica (2 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:30000,image:"/products/pic1.jpg"},
+    {id:"pic1b",name:"Picada Clásica (3 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:45000,image:"/products/pic1.jpg"},
+    {id:"pic1c",name:"Picada Clásica (4 pers.)",desc:"Milanesa, cazuela de queso, olivas, salchicha parrillera, fritas, pan y tostadas",price:60000,image:"/products/pic1.jpg"},
+    {id:"pic2a",name:"Picada Fiambre (2 pers.)",desc:"Mortadela, jamón, bondiola, salame, cazuela de queso, olivas, salchicha y pan",price:32000,image:"/products/pic2.jpg"},
+    {id:"pic2b",name:"Picada Fiambre (4 pers.)",desc:"Mortadela, jamón, bondiola, salame, cazuela de queso, olivas, salchicha y pan",price:64000,image:"/products/pic2.jpg"},
   ],
   extras:[
     {id:"e1",name:"Papas Fritas",desc:"Porción de papas fritas",price:10000},
     {id:"e2",name:"Papas Noisettes",desc:"Porción de papas noisettes",price:15000,image:"/products/e2.jpg"},
     {id:"e3",name:"Cheddar o Salsa Roquefort",desc:"Porción de salsa",price:4000},
-    {id:"e4",name:"Nuggets x8",desc:"8 unidades de nuggets",price:8000},
-    {id:"e5",name:"Nuggets x16",desc:"16 unidades de nuggets",price:16000},
-    {id:"e6",name:"Cazuela Salchicha Parrillera",desc:"Salchicha parrillera en salsa",price:10000},
+    {id:"e4",name:"Nuggets x8",desc:"8 unidades de nuggets",price:9000},
+    {id:"e5",name:"Nuggets x16",desc:"16 unidades de nuggets",price:18000},
+    {id:"e6",name:"Cazuela Salchicha Parrillera",desc:"Salchicha parrillera en salsa",price:12000},
     {id:"e7",name:"Cazuela de Queso",desc:"Cazuela de queso fundido",price:6000},
     {id:"e8",name:"Cazuela de Olivas",desc:"Olivas verdes o negras",price:5000},
   ],
   bebidas:[
-    {id:"b1",name:"Pepsi 1.5L",desc:"",price:6500},
-    {id:"b2",name:"Seven Up 1.5L",desc:"",price:6500},
-    {id:"b3",name:"Mirinda 1.5L",desc:"",price:6500},
-    {id:"b4",name:"Paso de los Toros 1.5L",desc:"",price:6500},
+    {id:"b1",name:"Pepsi 1.5L",desc:"",price:7000},
+    {id:"b2",name:"Seven Up 1.5L",desc:"",price:7000},
+    {id:"b3",name:"Mirinda 1.5L",desc:"",price:7000},
+    {id:"b4",name:"Paso de los Toros 1.5L",desc:"",price:7000},
     {id:"b5",name:"Vino Latitud 33",desc:"",price:15000},
-    {id:"b6",name:"Stella Artois 1L",desc:"Con envase",price:7500},
-    {id:"b7",name:"Brahma 1L",desc:"Con envase",price:6500},
-    {id:"b8",name:"Quilmes 1L",desc:"Con envase",price:6500},
+    {id:"b6",name:"Stella Artois 1L",desc:"Con envase",price:8000},
+    {id:"b7",name:"Brahma 1L",desc:"Con envase",price:7000},
+    {id:"b8",name:"Quilmes 1L",desc:"Con envase",price:7000},
     {id:"b9",name:"Lata Brahma",desc:"",price:3500},
     {id:"b10",name:"Lata Stella",desc:"",price:4000},
     {id:"b11",name:"Lata Quilmes Negra",desc:"",price:3500},
@@ -174,9 +174,9 @@ const MENU = {
 };
 
 const PROMOS = [
-  {id:"promo1",name:"Promo Muzza",desc:"2 Muzzarella Grandes + Pepsi 1.5L",price:28000,originalPrice:34500,badge:"AHORRÁS $6500"},
-  {id:"promo2",name:"Promo Bemba",desc:"1 Pizza Grande (1-12) + Bebida 1.5L",price:20000,originalPrice:22500,badge:"IMPERDIBLE"},
-  {id:"promo3",name:"Combo Milanga",desc:"2 Sándwich Milanga Completo + 2 Latas",price:27000,originalPrice:33000,badge:"PARA DOS"},
+  {id:"promo1",name:"Promo Muzza",desc:"2 Muzzarella Grandes + Pepsi 1.5L",price:28000,originalPrice:39000,badge:"AHORRÁS $11000"},
+  {id:"promo2",name:"Promo Bemba",desc:"1 Pizza Grande (1-12) + Bebida 1.5L",price:20000,originalPrice:28500,badge:"IMPERDIBLE"},
+  {id:"promo3",name:"Combo Milanga",desc:"2 Sándwich Milanga Completo + 2 Latas",price:27000,originalPrice:35000,badge:"PARA DOS"},
 ];
 
 /* Top sellers — orden por impacto visual + ventas */
@@ -234,10 +234,10 @@ function applyBurgerLataGift(cart, promoActive) {
 
 /* ── Cross-sell / Upsell rules (Waitry methodology) ── */
 const CROSS_SELL_RULES = [
-  { trigger: ["pizzas"], suggest: { id: "b1", name: "Pepsi 1.5L", price: 6500 }, message: "¿Sumás una Pepsi 1.5L?" },
+  { trigger: ["pizzas"], suggest: { id: "b1", name: "Pepsi 1.5L", price: 7000 }, message: "¿Sumás una Pepsi 1.5L?" },
   { trigger: ["hamburguesas", "lomos", "sandwiches"], suggest: { id: "e2", name: "Papas Noisettes", price: 15000 }, message: "¿Upgrade a Noisettes?" },
-  { trigger: ["picadas"], suggest: { id: "b6", name: "Stella Artois 1L", price: 7500 }, message: "¿Una Stella para la picada?" },
-  { trigger: ["bebidas"], suggest: { id: "e4", name: "Nuggets x8", price: 8000 }, message: "¿Unos nuggets para picar?" },
+  { trigger: ["picadas"], suggest: { id: "b6", name: "Stella Artois 1L", price: 8000 }, message: "¿Una Stella para la picada?" },
+  { trigger: ["bebidas"], suggest: { id: "e4", name: "Nuggets x8", price: 9000 }, message: "¿Unos nuggets para picar?" },
   { trigger: ["milanesas"], suggest: { id: "e3", name: "Cheddar o Roquefort", price: 4000 }, message: "¿Salsa cheddar o roquefort?" },
 ];
 
@@ -280,9 +280,9 @@ function getCheckoutSuggestions(cart) {
 
   if (hasPizza && !ids.has("e3")) suggestions.push({ id: "e3", name: "Cheddar o Roquefort", price: 4000 });
   if (hasPizza && !ids.has("e1")) suggestions.push({ id: "e1", name: "Papas Fritas", price: 10000 });
-  if (hasBurgerLomo && !ids.has("e4")) suggestions.push({ id: "e4", name: "Nuggets x8", price: 8000 });
-  if (!hasBebida) suggestions.push({ id: "b1", name: "Pepsi 1.5L", price: 6500 });
-  if (total > 30000 && !ids.has("promo1") && muzzaGrandeQty < 2) suggestions.push({ id: "promo1", name: "Promo Muzza", price: 28000, badge: "AHORRÁS $6500" });
+  if (hasBurgerLomo && !ids.has("e4")) suggestions.push({ id: "e4", name: "Nuggets x8", price: 9000 });
+  if (!hasBebida) suggestions.push({ id: "b1", name: "Pepsi 1.5L", price: 7000 });
+  if (total > 30000 && !ids.has("promo1") && muzzaGrandeQty < 2) suggestions.push({ id: "promo1", name: "Promo Muzza", price: 28000, badge: "AHORRÁS $11000" });
 
   return suggestions.slice(0, 3);
 }
@@ -694,7 +694,7 @@ function CartPanel({ cart, onAdd, onRemove, onClose, onCheckout }) {
               <p style={{color:"#FFD700",fontSize:"12px",fontWeight:900,textTransform:"uppercase",marginBottom:"8px"}}>🥤 ¡No te olvides la bebida!</p>
               <div style={{display:"flex",gap:"6px",flexWrap:"wrap"}}>
                 {[
-                  { id:"b1", name:"Pepsi 1.5L", price:6500 },
+                  { id:"b1", name:"Pepsi 1.5L", price:7000 },
                   { id:"b9", name:"Lata Brahma", price:3500 },
                 ].map(b => (
                   <button key={b.id} onClick={() => onAdd({ id: b.id, name: b.name, detail: "", price: b.price })}
